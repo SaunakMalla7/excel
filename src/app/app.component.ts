@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx';
 
 
@@ -7,17 +7,20 @@ import * as XLSX from 'xlsx';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  ngOnInit(): void {
+    console.log(this.groupList[1].studentList[4].phone);
+  }
   title = 'excel';
-  fileName= 'ExcelSheet.xlsx';
+  fileName = 'ExcelSheet.xlsx';
 
-  user: any[] = [
+  groupList: any[] = [
     {
       'group': 'L1C1',
       'studentList': [
         {
-          "id": "1",
-          "name": "Granville",
+          id: 1,
+          name: "Granville",
           phone: '6515611',
           email: 'Granville@gmail.com',
         },
@@ -208,25 +211,22 @@ export class AppComponent {
       ]
     }
   ]
-  
-  exportexcel(): void
-  {
- 
+
+  exportexcel(): void {
+
     /* generate workbook and add the worksheet */
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    this.user.forEach((obj:any)=>{
-      // short by name
-       this.user =obj.studentList.sort((a:any,b:any) =>(a.name > b. name) ? 1 : -1)
-      console.log(this.user)
-    // this.user.sort((a, b) => a.name < b.name ? -1 : 1)
-      const ws: XLSX.WorkSheet =XLSX.utils.json_to_sheet(obj.studentList);
-      
+    this.groupList.forEach((obj: any) => {
+      // sort by name
+      obj.studentList = obj.studentList.sort((a: any, b: any) => (a.name > b.name) ? 1 : -1)
+      const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(obj.studentList);
+
       XLSX.utils.book_append_sheet(wb, ws, obj.group);
     });
- 
-    /* save to file */  
+
+    /* save to file */
     XLSX.writeFile(wb, this.fileName);
- 
-    
-  } 
+
+
+  }
 }

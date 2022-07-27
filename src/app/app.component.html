@@ -1,7 +1,7 @@
 <div style=" margin: auto; width: 50%;">
   <button (click)="exportexcel()">Export to Excel</button>
 
-  <table class="styled-table" *ngFor="let group of user">
+  <table class="styled-table" *ngFor="let group of groupList">
     <thead>
         <tr>
             <th>Group</th>
@@ -11,7 +11,7 @@
             <th>Email</th>
         </tr>
       </thead>
-      
+
       <tbody>
         <tr *ngFor="let person of group.studentList">
               <td>{{group.group}}</td>
@@ -20,7 +20,7 @@
               <td>{{ person.phone }}</td>
               <td>{{ person.email }}</td>
             </tr>
-            
+
         </tbody>
 </table>
 </div>
